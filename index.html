@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tea Tier List & Ratings</title>
+  <title>SpecialTea Ratings</title>
   <style>
     :root {
       --bg: #121417;
@@ -123,9 +123,10 @@
       margin-bottom: 0.5rem;
     }
 
-    .rating {
+    .rank {
       color: #f1c40f;
       font-weight: bold;
+      font-size: 0.95rem;
       margin-bottom: 0.8rem;
     }
 
@@ -139,7 +140,7 @@
 <body>
 
   <header>
-    <h1>🍵 Tea Tier Ratings</h1>
+    <h1>🍵 SpecialTea Ratings</h1>
     <p>A collection of my favorite teas ranked by rarity and taste.</p>
   </header>
 
@@ -149,71 +150,71 @@
     // ==========================================
     // EDIT YOUR TEAS HERE VERY EASILY!
     // Rarity options: "common", "uncommon", "rare", "epic", "mythical", "legendary"
-    // Images default to 1.png, 2.png, ... 9.png
+    // Images map directly to 1.png, 2.png, ... 9.png
     // ==========================================
     const teaData = [
       {
         image: "1.png",
-        name: "Standard Black Tea",
-        rarity: "common",
-        rating: "★ 3.5 / 5",
-        desc: "Reliable, bold, and perfect for breakfast."
+        name: "Madame Grey",
+        rarity: "legendary",
+        rank: "#1",
+        desc: "An absolute top-tier classic with citrus and floral notes."
       },
       {
         image: "2.png",
-        name: "Jasmine Green Tea",
-        rarity: "uncommon",
-        rating: "★ 4.0 / 5",
-        desc: "Floral notes with a light, refreshing finish."
+        name: "Yogi Tea Throat Comfort",
+        rarity: "mythical",
+        rank: "#2",
+        desc: "Soothing, warming herbal blend designed for total comfort."
       },
       {
         image: "3.png",
-        name: "Earl Grey Supreme",
-        rarity: "rare",
-        rating: "★ 4.3 / 5",
-        desc: "Classic black tea infused with fragrant bergamot."
+        name: "Salbei Tee",
+        rarity: "epic",
+        rank: "#3",
+        desc: "Traditional pure sage tea with strong aromatic profile."
       },
       {
         image: "4.png",
-        name: "Uji Ceremonial Matcha",
-        rarity: "epic",
-        rating: "★ 4.7 / 5",
-        desc: "Rich, creamy, and vibrant green from Kyoto."
+        name: "Kamille Salbei Tee",
+        rarity: "rare",
+        rank: "#4",
+        desc: "A balanced, calming combination of chamomile and sage."
       },
       {
         image: "5.png",
-        name: "High Mountain Oolong",
-        rarity: "mythical",
-        rating: "★ 4.9 / 5",
-        desc: "Smooth with subtle buttery and orchid aromas."
+        name: "Apple Cinnamon Raisin Tea",
+        rarity: "rare",
+        rank: "#5",
+        desc: "Sweet and spicy fruity blend reminiscent of baked treats."
       },
       {
         image: "6.png",
-        name: "Aged Pu-erh (1998)",
-        rarity: "legendary",
-        rating: "★ 5.0 / 5",
-        desc: "Earthy, complex, and deeply soothing flavor."
+        name: "Zen Infusion",
+        rarity: "uncommon",
+        rank: "#6",
+        desc: "A relaxing and herbal blend to calm the mind."
       },
       {
         image: "7.png",
-        name: "Silver Needle White Tea",
-        rarity: "rare",
-        rating: "★ 4.2 / 5",
-        desc: "Delicate whole buds with sweet, melon-like notes."
+        name: "Bamboo Tea Pomegranate",
+        rarity: "uncommon",
+        rank: "#7",
+        desc: "Refreshing light bamboo base infused with tart pomegranate."
       },
       {
         image: "8.png",
-        name: "Dragon Well Green Tea",
-        rarity: "epic",
-        rating: "★ 4.6 / 5",
-        desc: "Pan-fried green tea with a distinctive nutty profile."
+        name: "Bamboo Tea Bamboo",
+        rarity: "common",
+        rank: "#8",
+        desc: "Pure, light, and crisp bamboo leaf infusion."
       },
       {
         image: "9.png",
-        name: "Golden Monkey King",
-        rarity: "legendary",
-        rating: "★ 5.0 / 5",
-        desc: "Rare golden buds offering hints of chocolate and honey."
+        name: "Groene Thee Ginseng",
+        rarity: "common",
+        rank: "#9",
+        desc: "Energizing green tea packed with subtle earthy ginseng."
       }
     ];
 
@@ -231,7 +232,7 @@
         </div>
         <div class="content">
           <h2 class="tea-name">${tea.name}</h2>
-          <div class="rating">${tea.rating}</div>
+          <div class="rank">Rank ${tea.rank}</div>
           <p class="description">${tea.desc}</p>
         </div>
       `;
@@ -241,4 +242,3 @@
   </script>
 </body>
 </html>
-
