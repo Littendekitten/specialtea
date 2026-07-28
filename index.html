@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tea Tier List & Ratings</title>
+  <style>
+    :root {
+      --bg: #121417;
+      --card-bg: #1e2229;
+      --text: #e0e6ed;
+      --subtext: #9da8b6;
+
+      /* Tier Colors */
+      --common: #a0a0a0;
+      --uncommon: #2ecc71;
+      --rare: #3498db;
+      --epic: #9b59b6;
+      --mythical: #e67e22;
+      --legendary: #f1c40f;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      padding: 2rem;
+      min-height: 100vh;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+
+    header h1 {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    header p {
+      color: var(--subtext);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .card {
+      background-color: var(--card-bg);
+      border-radius: 12px;
+      overflow: hidden;
+      border: 2px solid transparent;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+    }
+
+    /* Dynamic Border Colors based on Rarity */
+    .card.common { border-color: var(--common); }
+    .card.uncommon { border-color: var(--uncommon); }
+    .card.rare { border-color: var(--rare); }
+    .card.epic { border-color: var(--epic); }
+    .card.mythical { border-color: var(--mythical); }
+    .card.legendary { border-color: var(--legendary); }
+
+    .image-container {
+      width: 100%;
+      height: 200px;
+      position: relative;
+      background-color: #16181d;
+    }
+
+    .image-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .badge {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: bold;
+      text-transform: uppercase;
+      color: #fff;
+    }
+
+    .badge.common { background-color: var(--common); color: #111; }
+    .badge.uncommon { background-color: var(--uncommon); color: #111; }
+    .badge.rare { background-color: var(--rare); }
+    .badge.epic { background-color: var(--epic); }
+    .badge.mythical { background-color: var(--mythical); }
+    .badge.legendary { background-color: var(--legendary); color: #111; }
+
+    .content {
+      padding: 1.2rem;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+
+    .tea-name {
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .rating {
+      color: #f1c40f;
+      font-weight: bold;
+      margin-bottom: 0.8rem;
+    }
+
+    .description {
+      font-size: 0.9rem;
+      color: var(--subtext);
+      line-height: 1.4;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>🍵 Tea Tier Ratings</h1>
+    <p>A collection of my favorite teas ranked by rarity and taste.</p>
+  </header>
+
+  <main class="grid" id="tea-grid"></main>
+
+  <script>
+    // ==========================================
+    // EDIT YOUR TEAS HERE VERY EASILY!
+    // Rarity options: "common", "uncommon", "rare", "epic", "mythical", "legendary"
+    // Images default to 1.png, 2.png, ... 9.png
+    // ==========================================
+    const teaData = [
+      {
+        image: "1.png",
+        name: "Standard Black Tea",
+        rarity: "common",
+        rating: "★ 3.5 / 5",
+        desc: "Reliable, bold, and perfect for breakfast."
+      },
+      {
+        image: "2.png",
+        name: "Jasmine Green Tea",
+        rarity: "uncommon",
+        rating: "★ 4.0 / 5",
+        desc: "Floral notes with a light, refreshing finish."
+      },
+      {
+        image: "3.png",
+        name: "Earl Grey Supreme",
+        rarity: "rare",
+        rating: "★ 4.3 / 5",
+        desc: "Classic black tea infused with fragrant bergamot."
+      },
+      {
+        image: "4.png",
+        name: "Uji Ceremonial Matcha",
+        rarity: "epic",
+        rating: "★ 4.7 / 5",
+        desc: "Rich, creamy, and vibrant green from Kyoto."
+      },
+      {
+        image: "5.png",
+        name: "High Mountain Oolong",
+        rarity: "mythical",
+        rating: "★ 4.9 / 5",
+        desc: "Smooth with subtle buttery and orchid aromas."
+      },
+      {
+        image: "6.png",
+        name: "Aged Pu-erh (1998)",
+        rarity: "legendary",
+        rating: "★ 5.0 / 5",
+        desc: "Earthy, complex, and deeply soothing flavor."
+      },
+      {
+        image: "7.png",
+        name: "Silver Needle White Tea",
+        rarity: "rare",
+        rating: "★ 4.2 / 5",
+        desc: "Delicate whole buds with sweet, melon-like notes."
+      },
+      {
+        image: "8.png",
+        name: "Dragon Well Green Tea",
+        rarity: "epic",
+        rating: "★ 4.6 / 5",
+        desc: "Pan-fried green tea with a distinctive nutty profile."
+      },
+      {
+        image: "9.png",
+        name: "Golden Monkey King",
+        rarity: "legendary",
+        rating: "★ 5.0 / 5",
+        desc: "Rare golden buds offering hints of chocolate and honey."
+      }
+    ];
+
+    // Build the tea cards automatically
+    const container = document.getElementById('tea-grid');
+
+    teaData.forEach(tea => {
+      const card = document.createElement('div');
+      card.className = `card ${tea.rarity.toLowerCase()}`;
+
+      card.innerHTML = `
+        <div class="image-container">
+          <img src="${tea.image}" alt="${tea.name}" onerror="this.src='https://via.placeholder.com/300x200?text=Tea+Image'">
+          <span class="badge ${tea.rarity.toLowerCase()}">${tea.rarity}</span>
+        </div>
+        <div class="content">
+          <h2 class="tea-name">${tea.name}</h2>
+          <div class="rating">${tea.rating}</div>
+          <p class="description">${tea.desc}</p>
+        </div>
+      `;
+
+      container.appendChild(card);
+    });
+  </script>
+</body>
+</html>
+
