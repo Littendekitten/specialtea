@@ -127,13 +127,18 @@
       color: #f1c40f;
       font-weight: bold;
       font-size: 0.95rem;
-      margin-bottom: 0.8rem;
+      margin-bottom: 0.4rem;
     }
 
-    .description {
-      font-size: 0.9rem;
+    .price {
+      font-size: 0.95rem;
       color: var(--subtext);
-      line-height: 1.4;
+      font-weight: 500;
+    }
+
+    .price span {
+      color: #2ecc71;
+      font-weight: bold;
     }
   </style>
 </head>
@@ -158,63 +163,63 @@
         name: "Madame Grey",
         rarity: "legendary",
         rank: "#1",
-        desc: "An absolute top-tier classic with citrus and floral notes."
+        price: "9 SC"
       },
       {
         image: "2.png",
         name: "Yogi Tea Throat Comfort",
         rarity: "mythical",
         rank: "#2",
-        desc: "Soothing, warming herbal blend designed for total comfort."
+        price: "7 SC"
       },
       {
         image: "3.png",
         name: "Salbei Tee",
         rarity: "epic",
         rank: "#3",
-        desc: "Traditional pure sage tea with strong aromatic profile."
+        price: "5 SC"
       },
       {
         image: "4.png",
         name: "Kamille Salbei Tee",
         rarity: "rare",
         rank: "#4",
-        desc: "A balanced, calming combination of chamomile and sage."
+        price: "4 SC"
       },
       {
         image: "5.png",
         name: "Apple Cinnamon Raisin Tea",
         rarity: "rare",
         rank: "#5",
-        desc: "Sweet and spicy fruity blend reminiscent of baked treats."
+        price: "4 SC"
       },
       {
         image: "6.png",
         name: "Zen Infusion",
         rarity: "epic",
         rank: "#6",
-        desc: "A relaxing and herbal blend to calm the mind."
+        price: "6 SC"
       },
       {
         image: "7.png",
         name: "Bamboo Tea Pomegranate",
         rarity: "epic",
         rank: "#7",
-        desc: "Refreshing light bamboo base infused with tart pomegranate."
+        price: "5 SC"
       },
       {
         image: "8.png",
         name: "Bamboo Tea Bamboo",
         rarity: "epic",
         rank: "#8",
-        desc: "Pure, light, and crisp bamboo leaf infusion."
+        price: "6 SC"
       },
       {
         image: "9.png",
         name: "Groene Thee Ginseng",
         rarity: "rare",
         rank: "#9",
-        desc: "Energizing green tea packed with subtle earthy ginseng."
+        price: "5 SC"
       }
     ];
 
@@ -233,7 +238,7 @@
         <div class="content">
           <h2 class="tea-name">${tea.name}</h2>
           <div class="rank">Rank ${tea.rank}</div>
-          <p class="description">${tea.desc}</p>
+          <div class="price">Market Price: <span>${tea.price}</span></div>
         </div>
       `;
 
