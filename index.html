@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SpecialTea Rankings</title>
+  <title>SpecialTea Ratings</title>
   <style>
     :root {
       --bg: #121417;
@@ -18,6 +18,7 @@
       --epic: #9b59b6;
       --mythical: #e67e22;
       --legendary: #f1c40f;
+      --catgendary: #ff007f; /* Vibrant magenta for Catgendary */
     }
 
     * {
@@ -77,6 +78,10 @@
     .card.epic { border-color: var(--epic); }
     .card.mythical { border-color: var(--mythical); }
     .card.legendary { border-color: var(--legendary); }
+    .card.catgendary { 
+      border-color: var(--catgendary); 
+      box-shadow: 0 0 10px rgba(255, 0, 127, 0.3);
+    }
 
     .image-container {
       width: 100%;
@@ -109,6 +114,7 @@
     .badge.epic { background-color: var(--epic); }
     .badge.mythical { background-color: var(--mythical); }
     .badge.legendary { background-color: var(--legendary); color: #111; }
+    .badge.catgendary { background-color: var(--catgendary); color: #fff; text-shadow: 0 0 4px #000; }
 
     .content {
       padding: 1.2rem;
@@ -130,6 +136,10 @@
       margin-bottom: 0.4rem;
     }
 
+    .card.catgendary .rank {
+      color: var(--catgendary);
+    }
+
     .price {
       font-size: 0.95rem;
       color: var(--subtext);
@@ -145,17 +155,28 @@
 <body>
 
   <header>
-    <h1>🍵 SpecialTea Rankings</h1>
-    <p>Made By Sven Hildering</p>
+    <h1>🍵 SpecialTea Ratings</h1>
+    <p>A collection of my favorite teas ranked by rarity and market price.</p>
   </header>
 
   <main class="grid" id="tea-grid"></main>
 
   <script>
+    // Priority map for sorting ranks automatically
+    const rankPriority = {
+      "catgendary": 7,
+      "legendary": 6,
+      "mythical": 5,
+      "mythic": 5,
+      "epic": 4,
+      "rare": 3,
+      "uncommon": 2,
+      "common": 1
+    };
+
     // ==========================================
     // EDIT YOUR TEAS HERE VERY EASILY!
-    // Rarity options: "common", "uncommon", "rare", "epic", "mythical", "legendary"
-    // Images map directly to 1.png, 2.png, ... 9.png
+    // Rarity options: "catgendary", "legendary", "mythical", "epic", "rare", "uncommon", "common"
     // ==========================================
     const teaData = [
       {
@@ -163,67 +184,106 @@
         name: "Madame Grey",
         rarity: "legendary",
         rank: "#1",
-        price: "9 SC"
+        price: 9
       },
       {
         image: "2.png",
         name: "Yogi Tea Throat Comfort",
         rarity: "mythical",
         rank: "#2",
-        price: "7 SC"
+        price: 7
       },
       {
         image: "3.png",
         name: "Salbei Tee",
         rarity: "epic",
         rank: "#3",
-        price: "5 SC"
+        price: 5
       },
       {
         image: "4.png",
         name: "Kamille Salbei Tee",
         rarity: "rare",
         rank: "#4",
-        price: "4 SC"
+        price: 4
       },
       {
         image: "5.png",
         name: "Apple Cinnamon Raisin Tea",
         rarity: "rare",
         rank: "#5",
-        price: "4 SC"
+        price: 4
       },
       {
         image: "6.png",
         name: "Zen Infusion",
         rarity: "epic",
         rank: "#6",
-        price: "6 SC"
+        price: 6
       },
       {
         image: "7.png",
         name: "Bamboo Tea Pomegranate",
         rarity: "epic",
         rank: "#7",
-        price: "5 SC"
+        price: 5
       },
       {
         image: "8.png",
         name: "Bamboo Tea Bamboo",
         rarity: "epic",
         rank: "#8",
-        price: "6 SC"
+        price: 6
       },
       {
         image: "9.png",
         name: "Groene Thee Ginseng",
         rarity: "rare",
         rank: "#9",
-        price: "5 SC"
+        price: 5
+      },
+      {
+        image: "10.png",
+        name: "Rooibos Vanille",
+        rarity: "catgendary",
+        rank: "#10",
+        price: 10
+      },
+      {
+        image: "11.png",
+        name: "Kamillen Tee",
+        rarity: "epic",
+        rank: "#11",
+        price: 9
+      },
+      {
+        image: "12.png",
+        name: "Classic Chai",
+        rarity: "mythical",
+        rank: "#12",
+        price: 8
+      },
+      {
+        image: "13.png",
+        name: "Salbei Ingwer",
+        rarity: "rare",
+        rank: "#13",
+        price: 6
       }
     ];
 
-    // Build the tea cards automatically
+    // Auto-sort teas: Highest rank first, then highest SunnyCoins price
+    teaData.sort((a, b) => {
+      const rankA = rankPriority[a.rarity.toLowerCase()] || 0;
+      const rankB = rankPriority[b.rarity.toLowerCase()] || 0;
+
+      if (rankB !== rankA) {
+        return rankB - rankA; // Highest rank tier top
+      }
+      return b.price - a.price; // Highest price top if ranks match
+    });
+
+    // Render sorted tea cards automatically
     const container = document.getElementById('tea-grid');
 
     teaData.forEach(tea => {
@@ -238,7 +298,7 @@
         <div class="content">
           <h2 class="tea-name">${tea.name}</h2>
           <div class="rank">Rank ${tea.rank}</div>
-          <div class="price">Market Price: <span>${tea.price}</span></div>
+          <div class="price">Market Price: <span>${tea.price} SC</span></div>
         </div>
       `;
 
