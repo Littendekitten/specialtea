@@ -129,17 +129,6 @@
       margin-bottom: 0.5rem;
     }
 
-    .rank {
-      color: #f1c40f;
-      font-weight: bold;
-      font-size: 0.95rem;
-      margin-bottom: 0.4rem;
-    }
-
-    .card.catgendary .rank {
-      color: var(--catgendary);
-    }
-
     .price {
       font-size: 0.95rem;
       color: var(--subtext);
@@ -183,96 +172,99 @@
         image: "1.png",
         name: "Madame Grey",
         rarity: "legendary",
-        rank: "#1",
-        price: 9
+        price: 9,
+        priority: 1
       },
       {
         image: "2.png",
         name: "Yogi Tea Throat Comfort",
         rarity: "mythical",
-        rank: "#2",
-        price: 7
+        price: 7,
+        priority: 2
       },
       {
         image: "3.png",
         name: "Salbei Tee",
         rarity: "epic",
-        rank: "#3",
-        price: 5
+        price: 5,
+        priority: 4 // Placed after Bamboo Tea Pomegranate
       },
       {
         image: "4.png",
         name: "Kamille Salbei Tee",
         rarity: "rare",
-        rank: "#4",
-        price: 4
+        price: 4,
+        priority: 5
       },
       {
         image: "5.png",
         name: "Apple Cinnamon Raisin Tea",
         rarity: "rare",
-        rank: "#5",
-        price: 4
+        price: 4,
+        priority: 6
       },
       {
         image: "6.png",
         name: "Zen Infusion",
         rarity: "epic",
-        rank: "#6",
-        price: 6
+        price: 6,
+        priority: 2
       },
       {
         image: "7.png",
         name: "Bamboo Tea Pomegranate",
         rarity: "epic",
-        rank: "#7",
-        price: 5
+        price: 5,
+        priority: 3 // Placed right under Bamboo Tea Bamboo
       },
       {
         image: "8.png",
         name: "Bamboo Tea Bamboo",
         rarity: "epic",
-        rank: "#8",
-        price: 6
+        price: 6,
+        priority: 1
       },
       {
         image: "9.png",
         name: "Groene Thee Ginseng",
         rarity: "rare",
-        rank: "#9",
-        price: 5
+        price: 5,
+        priority: 1
       },
       {
         image: "10.png",
         name: "Rooibos Vanille",
         rarity: "catgendary",
-        rank: "#10",
-        price: 10
+        price: 10,
+        priority: 1
       },
       {
         image: "11.png",
         name: "Kamillen Tee",
         rarity: "epic",
-        rank: "#11",
-        price: 9
+        price: 9,
+        priority: 1
       },
       {
         image: "12.png",
         name: "Classic Chai",
         rarity: "mythical",
-        rank: "#12",
-        price: 8
+        price: 8,
+        priority: 1
       },
       {
         image: "13.png",
         name: "Salbei Ingwer",
         rarity: "rare",
-        rank: "#13",
-        price: 6
+        price: 6,
+        priority: 1
       }
     ];
 
-    // Auto-sort teas: Highest rank first, then highest SunnyCoins price
+    // Auto-sort teas:
+    // 1. Highest rank tier (Catgendary > Legendary > Mythical > Epic > Rare...)
+    // 2. Highest price (SC)
+    // 3. Custom priority (Tie-breaker for same rank and same price)
     teaData.sort((a, b) => {
       const rankA = rankPriority[a.rarity.toLowerCase()] || 0;
       const rankB = rankPriority[b.rarity.toLowerCase()] || 0;
@@ -280,7 +272,10 @@
       if (rankB !== rankA) {
         return rankB - rankA; // Highest rank tier top
       }
-      return b.price - a.price; // Highest price top if ranks match
+      if (b.price !== a.price) {
+        return b.price - a.price; // Highest price top
+      }
+      return (a.priority || 0) - (b.priority || 0); // Tie-breaker priority
     });
 
     // Render sorted tea cards automatically
@@ -297,7 +292,6 @@
         </div>
         <div class="content">
           <h2 class="tea-name">${tea.name}</h2>
-          <div class="rank">Rank ${tea.rank}</div>
           <div class="price">Market Price: <span>${tea.price} SC</span></div>
         </div>
       `;
