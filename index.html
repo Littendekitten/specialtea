@@ -4,14 +4,20 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SpecialTea Ratings</title>
+  <!-- Google Font - Poppins -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #121417;
+      /* Base Colors (Slightly deeper/richer) */
+      --bg-light: #1e2229;
+      --bg-dark: #121417;
       --card-bg: #1e2229;
       --text: #e0e6ed;
       --subtext: #9da8b6;
 
-      /* Tier Colors */
+      /* Tier Colors & Glows */
       --common: #a0a0a0;
       --uncommon: #2ecc71;
       --rare: #3498db;
@@ -19,6 +25,18 @@
       --mythical: #e67e22;
       --legendary: #f1c40f;
       --catgendary: #ff007f; /* Vibrant magenta for Catgendary */
+
+      /* Custom Glow effects for tiers (stronger/complex) */
+      --glow-rare: 0 0 10px rgba(52, 152, 219, 0.2);
+      --glow-epic: 0 0 12px rgba(155, 89, 182, 0.3);
+      --glow-mythical: 0 0 15px rgba(230, 126, 34, 0.4);
+      --glow-legendary: 0 0 18px rgba(241, 196, 15, 0.5);
+      --glow-catgendary: 0 0 25px rgba(255, 0, 127, 0.7);
+
+      /* Badges (linear-gradients for high tiers) */
+      --grad-mythical: linear-gradient(135deg, #e67e22 0%, #ffbb88 100%);
+      --grad-legendary: linear-gradient(135deg, #f1c40f 0%, #fff7cc 100%);
+      --grad-catgendary: linear-gradient(135deg, #ff007f 0%, #ff99cc 100%);
     }
 
     * {
@@ -28,8 +46,8 @@
     }
 
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      background-color: var(--bg);
+      font-family: 'Poppins', sans-serif;
+      background: radial-gradient(circle, var(--bg-light) 0%, var(--bg-dark) 100%);
       color: var(--text);
       padding: 2rem;
       min-height: 100vh;
@@ -37,55 +55,71 @@
 
     header {
       text-align: center;
-      margin-bottom: 2.5rem;
+      margin-bottom: 3.5rem;
     }
 
     header h1 {
-      font-size: 2.5rem;
+      font-size: 3rem;
+      font-weight: 700;
       margin-bottom: 0.5rem;
+      color: #fff;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
     }
 
     header p {
       color: var(--subtext);
+      font-size: 1.1rem;
+      max-width: 600px;
+      margin: 0 auto;
     }
 
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1.5rem;
-      max-width: 1200px;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2rem;
+      max-width: 1400px;
       margin: 0 auto;
     }
 
     .card {
       background-color: var(--card-bg);
-      border-radius: 12px;
+      border-radius: 20px; /* Stronger curves */
       overflow: hidden;
-      border: 2px solid transparent;
-      transition: transform 0.2s ease, border-color 0.2s ease;
+      border: 3px solid transparent; /* Thick graphical border */
       display: flex;
       flex-direction: column;
+      box-shadow: 
+        0 4px 6px -1px rgba(0, 0, 0, 0.3), 
+        0 2px 4px -1px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     }
 
     .card:hover {
-      transform: translateY(-4px);
+      transform: translateY(-8px) scale(1.02); /* Scale up and pop */
     }
 
-    /* Dynamic Border Colors based on Rarity */
+    /* Complex Graphical & Tier effects */
+    /* Common & Uncommon stay simple */
     .card.common { border-color: var(--common); }
     .card.uncommon { border-color: var(--uncommon); }
-    .card.rare { border-color: var(--rare); }
-    .card.epic { border-color: var(--epic); }
-    .card.mythical { border-color: var(--mythical); }
-    .card.legendary { border-color: var(--legendary); }
-    .card.catgendary { 
-      border-color: var(--catgendary); 
-      box-shadow: 0 0 10px rgba(255, 0, 127, 0.3);
-    }
+
+    /* Higher tiers get glows and pop more */
+    .card.rare { border-color: var(--rare); box-shadow: var(--glow-rare); }
+    .card.epic { border-color: var(--epic); box-shadow: var(--glow-epic); }
+    .card.mythical { border-color: var(--mythical); box-shadow: var(--glow-mythical); }
+    .card.legendary { border-color: var(--legendary); box-shadow: var(--glow-legendary); }
+    .card.catgendary { border-color: var(--catgendary); box-shadow: var(--glow-catgendary); }
+
+    /* Glow increases on hover for upper tiers */
+    .card.rare:hover { box-shadow: 0 10px 20px rgba(52, 152, 219, 0.3), var(--glow-rare); }
+    .card.epic:hover { box-shadow: 0 12px 25px rgba(155, 89, 182, 0.4), var(--glow-epic); }
+    .card.mythical:hover { box-shadow: 0 15px 30px rgba(230, 126, 34, 0.5), var(--glow-mythical); }
+    .card.legendary:hover { box-shadow: 0 18px 35px rgba(241, 196, 15, 0.6), var(--glow-legendary); }
+    .card.catgendary:hover { box-shadow: 0 25px 45px rgba(255, 0, 127, 0.8), var(--glow-catgendary); }
 
     .image-container {
       width: 100%;
-      height: 200px;
+      height: 300px; /* Made even bigger for graphical scale */
       position: relative;
       background-color: #16181d;
     }
@@ -94,50 +128,81 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
+      transition: transform 0.5s ease;
     }
 
+    .card:hover .image-container img {
+      transform: scale(1.05); /* Image zoom on hover */
+    }
+
+    /* Refined Graphical Badges */
     .badge {
       position: absolute;
-      top: 10px;
-      right: 10px;
-      padding: 4px 10px;
-      border-radius: 20px;
-      font-size: 0.75rem;
-      font-weight: bold;
+      top: 15px;
+      right: 15px;
+      padding: 6px 14px;
+      border-radius: 25px; /* Fully pill-shaped */
+      font-size: 0.8rem;
+      font-weight: 700;
       text-transform: uppercase;
       color: #fff;
+      letter-spacing: 1px;
+      backdrop-filter: blur(4px); /* Subtle backdrop blur */
     }
 
-    .badge.common { background-color: var(--common); color: #111; }
-    .badge.uncommon { background-color: var(--uncommon); color: #111; }
-    .badge.rare { background-color: var(--rare); }
-    .badge.epic { background-color: var(--epic); }
-    .badge.mythical { background-color: var(--mythical); }
-    .badge.legendary { background-color: var(--legendary); color: #111; }
-    .badge.catgendary { background-color: var(--catgendary); color: #fff; text-shadow: 0 0 4px #000; }
+    .badge.common { background-color: rgba(160, 160, 160, 0.8); color: #111; }
+    .badge.uncommon { background-color: rgba(46, 204, 113, 0.8); color: #111; }
+    .badge.rare { background-color: rgba(52, 152, 219, 0.8); }
+    .badge.epic { background-color: rgba(155, 89, 182, 0.8); }
+
+    /* High tiers get complex gradients/text shadows */
+    .badge.mythical { 
+      background: var(--grad-mythical);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    }
+    .badge.legendary { 
+      background: var(--grad-legendary);
+      color: #111;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    }
+    .badge.catgendary { 
+      background: var(--grad-catgendary);
+      color: #fff; 
+      text-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
+      box-shadow: 0 3px 12px rgba(255, 0, 127, 0.4);
+    }
 
     .content {
-      padding: 1.2rem;
+      padding: 1.5rem;
       display: flex;
       flex-direction: column;
       flex-grow: 1;
+      border-top: 1px solid rgba(255, 255, 255, 0.05); /* Added slight border to content */
     }
 
     .tea-name {
-      font-size: 1.3rem;
+      font-size: 1.5rem;
       font-weight: 600;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.75rem;
+      color: #fff;
     }
 
     .price {
-      font-size: 0.95rem;
+      font-size: 1rem;
       color: var(--subtext);
       font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .price .icon {
+      color: #2ecc71; /* Use the Uncommon color for money */
     }
 
     .price span {
-      color: #2ecc71;
-      font-weight: bold;
+      color: #fff;
+      font-weight: 700;
     }
   </style>
 </head>
@@ -168,104 +233,23 @@
     // Rarity options: "catgendary", "legendary", "mythical", "epic", "rare", "uncommon", "common"
     // ==========================================
     const teaData = [
-      {
-        image: "1.png",
-        name: "Madame Grey",
-        rarity: "legendary",
-        price: 9,
-        priority: 1
-      },
-      {
-        image: "2.png",
-        name: "Yogi Tea Throat Comfort",
-        rarity: "mythical",
-        price: 7,
-        priority: 2
-      },
-      {
-        image: "3.png",
-        name: "Salbei Tee",
-        rarity: "epic",
-        price: 5,
-        priority: 4
-      },
-      {
-        image: "4.png",
-        name: "Kamille Salbei Tee",
-        rarity: "rare",
-        price: 4,
-        priority: 5
-      },
-      {
-        image: "5.png",
-        name: "Apple Cinnamon Raisin Tea",
-        rarity: "rare",
-        price: 4,
-        priority: 6
-      },
-      {
-        image: "6.png",
-        name: "Zen Infusion",
-        rarity: "epic",
-        price: 6,
-        priority: 1 // Placed before Bamboo Tea Bamboo
-      },
-      {
-        image: "7.png",
-        name: "Bamboo Tea Pomegranate",
-        rarity: "epic",
-        price: 5,
-        priority: 3
-      },
-      {
-        image: "8.png",
-        name: "Bamboo Tea Bamboo",
-        rarity: "epic",
-        price: 6,
-        priority: 2 // Placed right under Zen Infusion
-      },
-      {
-        image: "9.png",
-        name: "Groene Thee Ginseng",
-        rarity: "rare",
-        price: 5,
-        priority: 1
-      },
-      {
-        image: "10.png",
-        name: "Rooibos Vanille",
-        rarity: "catgendary",
-        price: 10,
-        priority: 1
-      },
-      {
-        image: "11.png",
-        name: "Kamillen Tee",
-        rarity: "epic",
-        price: 9,
-        priority: 1
-      },
-      {
-        image: "12.png",
-        name: "Classic Chai",
-        rarity: "mythical",
-        price: 8,
-        priority: 1
-      },
-      {
-        image: "13.png",
-        name: "Salbei Ingwer",
-        rarity: "rare",
-        price: 6,
-        priority: 1
-      },
-      {
-        image: "14.png",
-        name: "Hanhen Klee Thee",
-        rarity: "epic",
-        price: 6,
-        priority: 1
-      }
+      { image: "1.png", name: "Madame Grey", rarity: "legendary", price: 9, priority: 1 },
+      { image: "2.png", name: "Yogi Tea Throat Comfort", rarity: "mythical", price: 7, priority: 2 },
+      { image: "3.png", name: "Salbei Tee", rarity: "epic", price: 5, priority: 4 },
+      { image: "4.png", name: "Kamille Salbei Tee", rarity: "rare", price: 4, priority: 5 },
+      { image: "5.png", name: "Apple Cinnamon Raisin Tea", rarity: "rare", price: 4, priority: 6 },
+      { image: "6.png", name: "Zen Infusion", rarity: "epic", price: 6, priority: 1 },
+      { image: "7.png", name: "Bamboo Tea Pomegranate", rarity: "epic", price: 5, priority: 3 },
+      { image: "8.png", name: "Bamboo Tea Bamboo", rarity: "epic", price: 6, priority: 2 },
+      { image: "9.png", name: "Groene Thee Ginseng", rarity: "rare", price: 5, priority: 1 },
+      { image: "10.png", name: "Rooibos Vanille", rarity: "catgendary", price: 10, priority: 1 },
+      { image: "11.png", name: "Kamillen Tee", rarity: "epic", price: 9, priority: 1 },
+      { image: "12.png", name: "Classic Chai", rarity: "mythical", price: 8, priority: 1 },
+      { image: "13.png", name: "Salbei Ingwer", rarity: "rare", price: 6, priority: 1 },
+      { image: "14.png", name: "Hanhen Klee Thee", rarity: "rare", price: 5, priority: 1 },
+      { image: "15.png", name: "Rooibos Sahne Karamell", rarity: "epic", price: 7, priority: 1 },
+      { image: "16.png", name: "Italienische Limone", rarity: "rare", price: 5, priority: 1 },
+      { image: "17.png", name: "Grüner Tee Orange Ingwer", rarity: "epic", price: 6, priority: 1 }
     ];
 
     // Auto-sort teas:
@@ -276,13 +260,9 @@
       const rankA = rankPriority[a.rarity.toLowerCase()] || 0;
       const rankB = rankPriority[b.rarity.toLowerCase()] || 0;
 
-      if (rankB !== rankA) {
-        return rankB - rankA; // Highest rank tier top
-      }
-      if (b.price !== a.price) {
-        return b.price - a.price; // Highest price top
-      }
-      return (a.priority || 0) - (b.priority || 0); // Tie-breaker priority
+      if (rankB !== rankA) { return rankB - rankA; }
+      if (b.price !== a.price) { return b.price - a.price; }
+      return (a.priority || 0) - (b.priority || 0); 
     });
 
     // Render sorted tea cards automatically
@@ -294,12 +274,14 @@
 
       card.innerHTML = `
         <div class="image-container">
-          <img src="${tea.image}" alt="${tea.name}" onerror="this.src='https://via.placeholder.com/300x200?text=Tea+Image'">
+          <img src="${tea.image}" alt="${tea.name}" onerror="this.src='https://via.placeholder.com/300x300?text=Tea+Image'">
           <span class="badge ${tea.rarity.toLowerCase()}">${tea.rarity}</span>
         </div>
         <div class="content">
           <h2 class="tea-name">${tea.name}</h2>
-          <div class="price">Market Price: <span>${tea.price} SC</span></div>
+          <div class="price">
+            <span class="icon">💰</span> Market Price: <span>${tea.price} SC</span>
+          </div>
         </div>
       `;
 
@@ -308,3 +290,4 @@
   </script>
 </body>
 </html>
+
